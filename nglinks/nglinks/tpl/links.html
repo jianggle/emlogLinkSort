@@ -1,0 +1,100 @@
+<div class=containertitle><strong>恋链不舍的链接</strong></div>
+<div class=line></div>
+<div class="filters">
+<div id="f_title">
+	<div style="float:left; margin-top:8px;">
+		<span><a href="#/links">全部</a></span>
+        <select ng-model="sortSeeForm" ng-change="chooseSortSee()" style="width:110px;">
+            <option value="">按分类查看...</option>
+            <option ng-repeat="x in linksInfo.linksort" value="{{x.linksort_id}}">{{x.linksort_name}}</option>
+        </select>
+	</div>
+	<div style="float:right;">
+		<input type="text" ng-model="myKeyword">
+        <input type="button" ng-click="doSearch(myKeyword)" value="搜索"/>
+	</div>
+	<div style="clear:both"></div>
+</div>
+</div>
+<form id="linksTaxisForm">
+<table width="100%" class="item_list">
+  <thead>
+    <tr>
+      <th width="21"><b>选</b></th>
+      <th width="50"><b>序号</b></th>
+      <th width="230"><b>链接</b></th>
+      <th width="80" class="tdcenter"><b>状态</b></th>
+      <th width="80" class="tdcenter"><b>分类</b></th>
+      <th width="80" class="tdcenter"><b>查看</b></th>
+      <th width="299"><b>描述</b></th>
+      <th width="100"><b>操作</b></th>
+    </tr>
+  </thead>
+  <tbody>
+<tr ng-repeat="x in linksInfo.links">
+<td width="21"><input type="checkbox" ng-checked="isChecked(x.id)" ng-click="updateMyCheck($event,x.id)" name="linkids[]" class="ids" /></td>
+<td><input type="text" style="width:40px;" name="link[{{x.id}}]" value="{{x.taxis}}" maxlength="4"/></td>
+<td><a href="#/linkedit/{{x.id}}" title="修改链接">{{x.sitename}}</a></td>
+<td class="tdcenter">
+    <a ng-if="x.hide == 'n'" ng-click="linkHide(x.id)" title="点击隐藏链接">显示</a>
+    <a ng-if="x.hide == 'y'" ng-click="linkShow(x.id)" title="点击显示链接" style="color:red;">隐藏</a>
+</td>
+<td>{{x.linksortname}}</td>
+<td class="tdcenter"><a ng-href="{{x.siteurl}}" target="_blank" title="查看链接"><img src="./views/images/vlog.gif" align="absbottom" border="0" /></a></td>
+<td>{{x.description}}</td>
+<td>
+    <a href="#/linkedit/{{x.id}}">编辑</a>
+    <a ng-click="linkDel(x.id)" class="care">删除</a>
+</td>
+</tr>
+<tr ng-if="!(linksInfo.linknum>0)">
+	<td class="tdcenter" colspan="8">亲，没有链接咧！</td>
+</tr>
+  </tbody>
+</table>
+<input ng-click="updateLinksTaxis()" type="submit" class="button" value="改变排序"/>
+</form>
+<div class="list_footer">
+    <a ng-click="chooseAll()">全选</a> | 
+    <a ng-click="chooseBack()">反选</a> 选中项：
+    <a ng-click="operateAll('del','确定删除所选吗？')" class="care">删除</a> | 
+    <a ng-click="operateAll('hide','确定隐藏所选吗？')">隐藏</a> | 
+    <a ng-click="operateAll('show','确定显示所选吗？')">显示</a> | 
+    <select ng-model="moveForm" ng-change="operateAll('move','确定移动所选吗？')" style="width:110px;">
+        <option value="" selected="selected">移动到分类...</option>
+        <option ng-repeat="xx in linksInfo.linksort" value="{{xx.linksort_id}}">{{xx.linksort_name}}</option>
+    </select>
+</div>
+<style>
+p.pageNav a{margin:0 3px;padding:2px 5px;border-radius:3px;background:#2A9DDB;color:#fff}
+p.pageNav a.cur{background:#ddd;color:#f00}
+</style>
+<p class="pageNav" ng-if="linksInfo.linknum>0">
+    <a ng-if="pageCur!=1" ng-click="loadPage(1,mysortID,myKeyword)">首页</a>
+    <a ng-if="pageCur!=1" ng-click="loadPage(pageCur-1,mysortID,myKeyword)">上一页</a>
+    <a ng-repeat="p in pages" ng-class="{true:'cur'}[pageCur==p]" ng-click="loadPage(p,mysortID,myKeyword)">{{p}}</a>
+    <a ng-if="pageCur!=pageAll" ng-click="loadPage(pageCur+1,mysortID,myKeyword)">下一页</a>
+    <a ng-if="pageCur!=pageAll" ng-click="loadPage(pageAll,mysortID,myKeyword)">尾页</a>
+    共有{{linksInfo.linknum}}个链接
+</p>
+<!--
+	添加链接
+-->
+<div style="margin:10px 0px 10px 0px;"><a href="javascript:displayToggle('nglink_new', 2);">添加链接+</a></div>
+<div id="nglink_new" class="item_edit">
+    <li><input ng-model="addLinkInfo.taxis" maxlength="4" class="input" style="width:30px;"/> 序号</li>
+    <li>
+        <select ng-model="addLinkInfo.linksortid" class="input">
+            <option value="" selected="selected">下拉选择分类</option>
+            <option ng-repeat="l in linksInfo.linksort" value="{{l.linksort_id}}">{{l.linksort_name}}</option>
+        </select>
+    </li>
+    <li><input ng-model="addLinkInfo.sitename" maxlength="200" class="input" style="width:232px;"/> 名称<span class="required">*</sapn></li>
+    <li><input ng-model="addLinkInfo.siteurl" maxlength="200" class="input" style="width:232px;"/> 地址<span class="required">*</sapn></li>
+    <li>描述</li>
+    <li><textarea ng-model="addLinkInfo.description" type="text" class="textarea" style="width:230px;height:60px;overflow:auto;"></textarea></li>
+    <li><input ng-click="linkAdd()" type="button" class="button" value="添加链接"/></li>
+</div>
+<script>
+$("#nglink_new").css('display', $.cookie('em_nglink_new') ? $.cookie('em_nglink_new') : 'none');
+</script>

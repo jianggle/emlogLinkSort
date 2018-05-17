@@ -1,0 +1,14 @@
+<div class=containertitle><b>链接管理 > 编辑链接</b></div>
+<div class=line></div>
+<div class="item_edit">
+    <li>
+        <select ng-model="selectSort" ng-options="x.linksort_name for x in sortList" ng-change="countryChange()"></select>
+        选择分类
+    </li>
+	<li><input size="40" ng-model="myForm.sitename" class="input"/> 名称<span class="required">*</sapn></li>
+	<li><input size="40" ng-model="myForm.siteurl" class="input"/> 地址<span class="required">*</sapn></li>
+	<li>链接描述<br /><textarea ng-model="myForm.description" rows="3" class="textarea" cols="42"></textarea></li>
+	<li>
+	<input type="button" value="保 存" class="button" ng-click="doSubmit()"/>
+	<input type="button" value="取 消" class="button" onclick="javascript: window.history.back();" /></li>
+</div>

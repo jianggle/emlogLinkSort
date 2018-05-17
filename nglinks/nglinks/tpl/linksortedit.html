@@ -1,0 +1,12 @@
+<div class=containertitle><b>编辑链接分类</b></div>
+<div class=line></div>
+<div class="item_edit">
+    <li>
+        <input type="text" class="input" style="width:200px;" ng-model="sortinfo.linksort_name" ng-value="{{sortinfo.linksort_name}}"/> 名称 <span class="required">*</sapn></li>
+        <input ng-model="sortinfo.linksort_id" type="hidden" value="{{sortinfo.linksort_id}}"/>
+    </li>
+    <li>
+        <input ng-click="updateLinkSortName(sortinfo.linksort_id,sortinfo.linksort_name)" type="button" class="button" value="保 存"/>
+        <input type="button" class="button" value="取 消" onclick="javascript: window.history.back();" />
+    </li>
+</span>

@@ -1,0 +1,35 @@
+<div class=containertitle><strong>恋链不舍的分类</strong></div>
+<div class=line></div>
+<form id="linkSortForm">
+<table width="100%" class="item_list">
+    <thead>
+        <tr><th width="8%"><b>序号</b></th><th width="47%"><b>名称</b></th><th width="20%"><b>链接数量</b></th><th width="25%">操作</th></tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="x in linksort">
+            <td><input type="text" style="width:36px;" maxlength="4" name="linksort[{{x.linksort_id}}]" value="{{x.taxis}}"/></td>
+            <td><a href="#/linksortedit/{{x.linksort_id}}">{{x.linksort_name}}</a></td>
+            <td align="center"><a href="">{{x.num}}</a></td>
+            <td>
+                <a href="#/linksortedit/{{x.linksort_id}}">编辑</a>
+                <a ng-click="deleteLinkSort(x.linksort_id)" class="care">删除</a>
+            </td>
+        </tr>
+        <tr ng-if="linksort.length < 1"><td class="tdcenter" colspan="4">还没有添加分类</td></tr>
+    </tbody>
+</table>
+<div class="list_footer">
+	<input ng-click="updateLinkSortTaxis()" type="submit" class="button" value="改变排序"/>
+</div>
+</form>
+<div style="margin:30px 0px 10px 0px;">
+	<a href="javascript:displayToggle('linksort_new', 2);">添加分类+</a>
+</div>
+<div id="linksort_new" class="item_edit">
+    <li><input ng-model="taxis" maxlength="4" style="width:30px;" class="input"/> 序号</li>
+    <li><input ng-model="linksort_name" maxlength="200" class="input" style="width:243px;"/>名称<span class="required">*</sapn></li>
+    <li><input ng-click="addLinkSort(taxis,linksort_name)" type="button" class="button" value="添加新分类"/></li>
+</div>
+<script>
+$("#linksort_new").css('display', $.cookie('em_linksort_new') ? $.cookie('em_linksort_new') : 'none');
+</script>
