@@ -1,9 +1,9 @@
-﻿# 方案二
+﻿## rootlinks
 emlog友链分类管理，基于emlog5.3.1（需更改源代码）
 
 使用说明：http://www.eqifei.net/emlog-link-sort.html
 
-## 1.数据库改动
+### 1.数据库改动
 
   a.添加表“表前缀_sortlink”并增加以下字段
 
@@ -17,7 +17,7 @@ emlog友链分类管理，基于emlog5.3.1（需更改源代码）
 
   linksortid 类型int(10)
 
-## 2.添加文件
+### 2.添加文件
 
   a. admin/sortlink.php
 
@@ -27,7 +27,7 @@ emlog友链分类管理，基于emlog5.3.1（需更改源代码）
 
   d. include/model/sortlink_model.php
 
-## 3.修改文件
+### 3.修改文件
 
   a. admin/link.php
 
